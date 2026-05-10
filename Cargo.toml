@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 anyxml = "=0.12.1"
+zip = "=8.6.0"
