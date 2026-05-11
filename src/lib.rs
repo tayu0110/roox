@@ -11,7 +11,7 @@ use anyxml::{
     sax::{Attributes, EntityResolver, ErrorHandler, SAXHandler, XMLReader, error::SAXParseError},
     uri::{URIStr, URIString, escape_except, unescape},
 };
-use zip::{read::ZipFile, result::ZipError};
+use zip::{ZipArchive, read::ZipFile, result::ZipError};
 
 /// Media Types stream namespace.
 ///
@@ -105,31 +105,33 @@ impl From<XMLError> for PackageError {
 ///
 /// # Reference
 /// - ISO/IEC 29500-2:2021
-pub struct Package {
+pub struct Package<R: Read + Seek> {
     /// Source parts
     parts: Vec<Part>,
     /// Root relationship part
     relation: Relationships,
+    /// Content type stream
     content_types: ContentTypes,
+    /// Zip archive
+    archive: ZipArchive<R>,
 }
 
-impl Package {
-    pub fn from_reader<'a, R: Read + Seek + 'a>(
-        reader: R,
-        base_uri: &URIStr,
-    ) -> Result<Self, PackageError> {
+impl<R: Read + Seek> Package<R> {
+    /// Expand package from `reader` whose base URI is `base_uri`.
+    pub fn from_reader(reader: R, base_uri: &URIStr) -> Result<Self, PackageError> {
         if !base_uri.is_absolute() {
             return Err(PackageError::BaseURINotAbsolute);
         }
-        let mut zip = zip::ZipArchive::new(reader)?;
-        let content_types = zip.by_name("[Content_Types].xml")?;
+        let mut archive = zip::ZipArchive::new(reader)?;
+        let content_types = archive.by_name("[Content_Types].xml")?;
         let content_types = ContentTypes::from_reader(content_types)?;
-        let rel = zip.by_name("_rels/.rels")?;
+        let rel = archive.by_name("_rels/.rels")?;
         let relation = Relationships::from_reader(rel, base_uri)?;
         Ok(Package {
             parts: vec![],
             relation,
             content_types,
+            archive,
         })
     }
 }
