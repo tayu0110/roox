@@ -2,6 +2,10 @@
 name = "roox"
 version = "0.0.0"
 edition = "2024"
+license = "MIT"
+description = "Office Open XML implementation for Rust"
+repository = "https://github.com/tayu0110/roox.git"
+rust-version = "1.95.0"
 
 [dependencies]
 anyxml = "=0.13.0"
