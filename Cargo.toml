@@ -1,8 +1,8 @@
 [package]
 name = "roox"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2024"
 
 [dependencies]
-anyxml = "=0.12.1"
+anyxml = "=0.13.0"
 zip = "=8.6.0"

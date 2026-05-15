@@ -1,3 +1,4 @@
+#![allow(unused)]
 use std::{
     collections::BTreeMap,
     io::{Read, Seek},

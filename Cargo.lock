@@ -27,9 +27,9 @@ checksum = "7f202df86484c868dbad7eaa557ef785d5c66295e41b460ef922eca0723b842c"
 
 [[package]]
 name = "anyxml"
-version = "0.12.1"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6b0aea3ca6bb0a9de0ac0e577e8e046fb11976746d7517d489dcad570ead8ec8"
+checksum = "fabee4f3497151f98c654601c058fc66bda08edbcc0e8a77cb6f09ca18eed55c"
 dependencies = [
  "anyxml-automata",
  "anyxml-base64",
@@ -580,7 +580,7 @@ checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
 
 [[package]]
 name = "roox"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "anyxml",
  "zip",
